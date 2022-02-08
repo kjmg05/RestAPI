@@ -15,7 +15,7 @@ class Pacientes {
         
     }
 
-    new (nombres, apellidos, id, email, telefono) {
+    /*new (nombres, apellidos, id, email, telefono) {
         return new Promise((accept, reject) => {
             db.run(
                 'INSERT INTO pacientes (nombres, apellidos, id, email, telefono) VALUES (?, ?, ?, ?, ?);',
@@ -29,7 +29,25 @@ class Pacientes {
                 }
             );
         });
+    }*/
+
+    new (nombres, apellidos, id, email, telefono) {
+        return new Promise((accept, reject) => {
+            db.run(
+                'INSERT INTO pacientes (nombres, apellidos, id, email, telefono) VALUES (?, ?, ?, ?, ?);',
+                [nombres, apellidos, id, email, telefono],
+                function (err) {
+                    if(err) {
+                      console.error(err);
+                      reject(err);
+                    }
+                    accept(this.lastID);
+                  }
+            );
+        });
     }
+
+
 
     getAll () {
         return new Promise((accept, reject) => {
