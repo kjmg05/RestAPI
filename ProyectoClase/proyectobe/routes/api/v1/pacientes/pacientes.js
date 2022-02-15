@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-//const Pacientes = new require('../../../../dao/pacientes/pacientes.model');
 const Pacientes = require('../../../../dao/pacientes/pacientes.model');
 const pacienteModel = new Pacientes();
 
@@ -35,10 +34,10 @@ router.get('/all', async (req, res) => {
 }); // get all pacientes
 
 // /byid?id=1; no representa recurso unico, /byid/1; representa recurso unico, 
-router.get('/byid/:id', async (req, res) => {
+router.get('/byid/:idP', async (req, res) => {
     try {
-        const {id} = req.params;
-        const row = await  pacienteModel.getById(parseInt(id));
+        const {idP} = req.params;
+        const row = await  pacienteModel.getById(idP);
         res.status(200).json({status: 'Ok', paciente: row});
     } catch (e) {
         console.log(e);
@@ -63,8 +62,7 @@ router.post('/new', async(req, res) => {
         rslt = await pacienteModel.new(nombres, apellidos, id, email, telefono);
         res.status(200).json(
         {
-            status: 'Ok', 
-            //recieved: {nombres, apellidos, nombreCompleto: `${nombres} ${apellidos}`, id, email, telefono}
+            status: 'Ok',
             result: rslt
         });
     } catch(e){
@@ -83,7 +81,7 @@ router.put('/update/:idP', async(req, res) => {
     try {
         const {nombres, apellidos, id, email, telefono} = req.body;
         const {idP} = req.params;
-        const result = await pacienteModel.updateOne(parseInt(idP), nombres, apellidos, id, email, telefono);
+        const result = await pacienteModel.updateOne(idP, nombres, apellidos, id, email, telefono);
         res.status(200).json(
             {
                 status: 'Ok', 
@@ -105,7 +103,7 @@ router.put('/update/:idP', async(req, res) => {
 router.delete('/delete/:idP', async(req, res) => {
     try {
         const {idP} = req.params;
-        const rslt = await pacienteModel.deleteOne(parseInt(idP));
+        const rslt = await pacienteModel.deleteOne(idP);
         res.status(200).json(
             {
                 status: 'Ok', 
