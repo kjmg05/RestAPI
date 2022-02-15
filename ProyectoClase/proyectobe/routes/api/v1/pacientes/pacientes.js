@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 //const Pacientes = new require('../../../../dao/pacientes/pacientes.model');
-const Pacientes = require('../../../../dao/pacientes/pacientes.model.js.sqlite');
+const Pacientes = require('../../../../dao/pacientes/pacientes.model');
 const pacienteModel = new Pacientes();
 
 //Metodos Validos protocolo RestAPI

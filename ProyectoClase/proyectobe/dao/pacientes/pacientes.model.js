@@ -7,15 +7,12 @@ class Pacientes {
         getDb()
         .then((database) => {
             db = database;
-            this.collection = db.collections('Pacientes');
+            this.collection = db.collection('Pacientes');
             if(process.env.MIGRATE === 'true'){
-                /*const createStatement = 'CREATE TABLE IF NOT EXISTS pacientes (idPaciente INTEGER PRIMARY KEY AUTOINCREMENT, nombres TEXT, apellidos TEXT, id TEXT, email TEXT, telefono TEXT);';
-                db.run(createStatement);*/
                 //Por si acaso
             }  
         })
         .catch((err) => {console.error(err)});
-        
     }
 
     async new (nombres, apellidos, id, email, telefono) {

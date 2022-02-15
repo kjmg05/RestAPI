@@ -2,7 +2,7 @@ const MongoClient = require('mongodb').MongoClient;
 let db = null;
 let client = null;
  
-export const getDb = async () => {
+const getDb = async () => {
     if(db){
         return db;
     }
@@ -16,4 +16,4 @@ export const getDb = async () => {
     return db;
 }
 
-export default getDb;
+module.exports = getDb;
