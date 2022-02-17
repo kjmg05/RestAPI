@@ -57,6 +57,18 @@ class Pacientes {
         
         return await this.collection.deleteOne(filter);
     }
+
+    //Facet 
+    async getFaceted(page, items, filter = {}) {
+        const cursor = this.collection.find(filter);
+        const totalItems = await cursor.count();
+        cursor.skip((page - 1) * items);
+        cursor.limit(items);
+
+        const resultados = await cursor.toArray();
+        return {totalItems, page, items, totalPages: (Math.ceil(totalItems/items)), resultados};
+    }
 }
+
 
 module.exports = Pacientes;
