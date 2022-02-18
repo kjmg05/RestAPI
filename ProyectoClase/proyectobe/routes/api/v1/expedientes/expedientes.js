@@ -85,4 +85,83 @@ router.delete('/delete/:idE', async(req, res) => {
     }
 });
 
+//Facet search
+const allowedItemsNumber = [10, 15, 20];
+router.get('/facet/:page/:items', async (req, res) => {
+    const page = parseInt(req.params.page, 10);
+    const items = parseInt(req.params.items, 10);
+
+    if(allowedItemsNumber.includes(items)){
+        try {
+            const expedientes = await expedienteModel.getFaceted(page, items);
+            res.status(200).json({docs:expedientes});
+        } catch (ex) {
+            console.log(ex);
+            res.status(500).json({ status: 'Failed',});
+        }
+    } else {
+        return res.status(403).json({status: 'error', msg: 'Not a valid item value (10, 15, 20)'});
+    }
+
+});
+
+//Tags
+router.put('/addtag/:id', async(req, res) => {
+    try {
+        const {tag} = req.body;
+        const {id} = req.params;
+        const result = await expedienteModel.updateAddTag(id, tag);
+        res.status(200).json(
+            {
+                status: 'Ok', 
+                result
+            });
+    } catch (e) {
+        console.log(e);
+        res.status(500).json(
+            {
+                status: 'Failed', 
+            });
+    }
+});
+
+router.put('/addtagset/:id', async(req, res) => {
+    try {
+        const {tag} = req.body;
+        const {id} = req.params;
+        const result = await expedienteModel.updateAddTagSet(id, tag);
+        res.status(200).json(
+            {
+                status: 'Ok', 
+                result
+            });
+    } catch (e) {
+        console.log(e);
+        res.status(500).json(
+            {
+                status: 'Failed',
+            });
+    }
+});
+
+//NOT SURE 
+/*router.get('/byname/:name/:page/:items', async (req, res) => {
+    const name = req.params.name;
+    const page = parseInt(req.params.page, 10);
+    const items = parseInt(req.params.items, 10);
+
+    if(allowedItemsNumber.includes(items)){
+        try {
+            const expedientes = await expedienteModel.getFaceted(page, items, {nombres:name});
+            res.status(200).json({docs:expedientes});
+        } catch (ex) {
+            console.log(ex);
+            res.status(500).json({ status: 'Failed',});
+        }
+    } else {
+        return res.status(403).json({status: 'error', msg: 'Not a valid item value (10, 15, 20)'});
+    }
+
+});*/
+
 module.exports = router;

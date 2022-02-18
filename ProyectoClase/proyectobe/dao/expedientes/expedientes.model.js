@@ -58,7 +58,7 @@ class Expedientes {
     }
 
     //Facet 
-    /*async getFaceted(page, items, filter = {}) {
+    async getFaceted(page, items, filter = {}) {
         const cursor = this.collection.find(filter);
         const totalItems = await cursor.count();
         cursor.skip((page - 1) * items);
@@ -89,7 +89,7 @@ class Expedientes {
 
         const filter = {_id: new ObjectId(idTag)};
         return await this.collection.updateOne(filter, updateCmd)
-    }*/
+    }
 }
 
 module.exports = Expedientes;
