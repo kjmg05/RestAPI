@@ -161,4 +161,62 @@ router.get('/byname/:name/:page/:items', async (req, res) => {
 
 });
 
+//Tags
+router.put('/addtag/:id', async(req, res) => {
+    try {
+        const {tag} = req.body;
+        const {id} = req.params;
+        const result = await pacienteModel.updateAddTag(id, tag);
+        res.status(200).json(
+            {
+                status: 'Ok', 
+                result
+            });
+    } catch (e) {
+        console.log(e);
+        res.status(500).json(
+            {
+                status: 'Failed', 
+            });
+    }
+});
+
+router.put('/addtagset/:id', async(req, res) => {
+    try {
+        const {tag} = req.body;
+        const {id} = req.params;
+        const result = await pacienteModel.updateAddTagSet(id, tag);
+        res.status(200).json(
+            {
+                status: 'Ok', 
+                result
+            });
+    } catch (e) {
+        console.log(e);
+        res.status(500).json(
+            {
+                status: 'Failed',
+            });
+    }
+});
+
+router.put('/poptag/:id', async(req, res) => {
+    try {
+        const {tag} = req.body;
+        const {id} = req.params;
+        const result = await pacienteModel.updatePopTag(id, tag);
+        res.status(200).json(
+            {
+                status: 'Ok', 
+                result
+            });
+    } catch (e) {
+        console.log(e);
+        res.status(500).json(
+            {
+                status: 'Failed',
+            });
+    }
+});
+
 module.exports = router;

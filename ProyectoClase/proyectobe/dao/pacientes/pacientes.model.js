@@ -68,7 +68,43 @@ class Pacientes {
         const resultados = await cursor.toArray();
         return {totalItems, page, items, totalPages: (Math.ceil(totalItems/items)), resultados};
     }
+
+    //Adding Tags
+    async updateAddTag(idTag, tagEntry) {
+        const updateCmd = {
+            "$push": {
+                tags: tagEntry
+            }
+        }
+
+        const filter = {_id: new ObjectId(idTag)};
+        return await this.collection.updateOne(filter, updateCmd)
+    }
+
+    async updateAddTagSet(idTag, tagEntry) {
+        const updateCmd = {
+            "$addToSet": {
+                tags: tagEntry
+            }
+        }
+
+        const filter = {_id: new ObjectId(idTag)};
+        return await this.collection.updateOne(filter, updateCmd)
+    }
+
+    async updatePopTag(idTag, tagEntry) {
+        const updateCmd = {
+            "$pop": { //primer elemento que coincida con el valor establecido
+                tags: tagEntry
+            }
+        }
+
+        const filter = {_id: new ObjectId(idTag)};
+        return await this.collection.updateOne(filter, updateCmd)
+    }
+
 }
 
+//cada documento es tan sensible , que se puede tener docs con estructuras distintas en la coleccion
 
 module.exports = Pacientes;
