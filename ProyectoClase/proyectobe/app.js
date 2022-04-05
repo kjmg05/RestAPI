@@ -3,9 +3,10 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require('cors');
-var whiteList = (process.env.CORS_ORIGIN || '').split(',');
+var whiteList = (process.env.CORS_ORIGIN || 'http://localhost:3001').split(',');
 var corsOptions = {
     origin: (origin, callback) => {
+        console.log('Origin', origin);
         if(whiteList.indexOf(origin) >= 0){
             callback(null, true)
         } else {

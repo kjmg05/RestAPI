@@ -1,0 +1,10 @@
+var docs = [];
+for (var i = 0; i < 100; i++){
+	docs.push({
+		"documento" : (i+1),
+		"nota" : Math.floor(Math.random()*100),
+		"tag" : []
+	});
+}
+
+db.notas.insertMany(docs);
